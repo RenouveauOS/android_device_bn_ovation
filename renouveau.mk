@@ -1,5 +1,4 @@
 #
-# Copyright (C) 2008 The Android Open Source Project
 # Copyright (C) 2011 The CyanogenMod Project
 # Copyright (C) 2019 Renouveau
 #
@@ -16,18 +15,20 @@
 # limitations under the License.
 #
 
-#
-# This file should set PRODUCT_MAKEFILES to a list of product makefiles
-# to expose to the build system.  LOCAL_DIR will already be set to
-# the directory containing this file.
-#
-# This file may not rely on the value of any variable other than
-# LOCAL_DIR; do not use any conditionals, and do not look up the
-# value of any variable that isn't set in this file or in a file that
-# it includes.
-#
+TARGET_SCREEN_WIDTH := 1920
+TARGET_SCREEN_HEIGHT := 1280
 
-PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/aosp_ovation.mk \
-    $(LOCAL_DIR)/renouveau_ovation.mk \
-    $(LOCAL_DIR)/full_ovation.mk
+# Inherit some common Renouveau stuff.
+$(call inherit-product, vendor/renouveau/config/common_full_tablet_wifionly.mk)
+
+# Inherit device configuration for ovation
+$(call inherit-product, device/bn/ovation/full_ovation.mk)
+$(call inherit-product, device/bn/common/renouveau.mk)
+
+# Device overlay
+DEVICE_PACKAGE_OVERLAYS += device/bn/ovation/overlay/cm
+
+PRODUCT_NAME := renouveau_ovation
+PRODUCT_MODEL := BN NookHD+
+PRODUCT_MANUFACTURER := Barnes & Noble
+PRODUCT_RELEASE_NAME := NookHD+
